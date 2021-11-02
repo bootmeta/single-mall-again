@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.github.mall.admin.mapper.RoleMapper">
+
+    <sql id="SQL_WHERE">
+        <where>
+            <if test="roleName != null and roleName !='' ">
+                name = #{roleName}
+            </if>
+        </where>
+        order by sort desc
+        limit #{pageNum},#{pageSize}
+    </sql>
+
+    <select id="count" resultType="java.lang.Long">
+        select count(1) from ums_role <include refid="SQL_WHERE"/>
+    </select>
+
+    <select id="page" resultType="io.github.mall.persist.entity.UmsRole">
+        select *  from ums_role <include refid="SQL_WHERE"/>
+    </select>
+</mapper>
